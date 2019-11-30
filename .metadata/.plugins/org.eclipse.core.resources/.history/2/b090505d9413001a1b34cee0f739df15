@@ -1,0 +1,18 @@
+package com.sample
+import java.util.ArrayList;
+
+declare Question
+	question : String
+	answers : ArrayList<String>
+end
+
+declare Answer
+	question : String
+	answer : String
+end
+ 
+rule "Init"
+    then
+    	q: new Answer("Tak","Nie")
+    	System.out.println(q.answer)
+end

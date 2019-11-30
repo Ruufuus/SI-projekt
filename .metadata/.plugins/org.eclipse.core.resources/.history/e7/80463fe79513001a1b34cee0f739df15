@@ -1,0 +1,21 @@
+package com.sample
+import java.util.ArrayList;
+
+declare Question
+	question : String
+	answers : ArrayList<String>
+end
+
+declare Answer
+	question : String
+	answer : String
+end
+ 
+rule "Init"
+    then
+    	Question pytanie = new Question();
+    	pytanie.setQuestion("Drama or comedy?");
+    	pytanie.setAnswers(new ArrayList<String>(new String[] {"Drama","Comedy"}));
+    	insert(pytanie);
+    	System.out.println(pytanie.getQuestion());
+end
