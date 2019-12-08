@@ -456,3 +456,22 @@ rule "Workplace humor?#Yes"
 	then
 		showingRecommendation(frame,"The Office");
 end
+
+rule "Workplace humor?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Workplace humor?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Yes");
+		answers.add("No");
+		Question q = new Question("Want to see James Franco & Seth Rogen as high schoolers?",answers,null);
+		insert(q);
+end
+
+rule "Want to see James Franco & Seth Rogen as high schoolers?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Want to see James Franco & Seth Rogen as high schoolers?")
+	then
+		showingRecommendation(frame,"Freaks & Geeks");
+end
+
