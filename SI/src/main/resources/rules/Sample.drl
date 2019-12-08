@@ -517,3 +517,28 @@ rule "Do you like them to sell drugs?#Yes"
 	then
 		showingRecommendation(frame,"WEEDS");
 end
+
+rule "Do you like them to sell drugs?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Do you like them to sell drugs?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Tina");
+		answers.add("Amy");
+		Question q = new Question("Tina Fey or Amy Poehler?",answers,null);
+		insert(q);
+end
+
+rule "Tina Fey or Amy Poehler?#Tina"
+	when 
+		Question(getAnswer() == "Tina", getQuestion() == "Tina Fey or Amy Poehler?")
+	then
+		showingRecommendation(frame,"30 Rock");
+end
+
+rule "Tina Fey or Amy Poehler?#Amy"
+	when 
+		Question(getAnswer() == "Amy", getQuestion() == "Tina Fey or Amy Poehler?")
+	then
+		showingRecommendation(frame,"Parks & Recreation");
+end
