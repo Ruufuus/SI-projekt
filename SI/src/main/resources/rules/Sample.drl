@@ -427,3 +427,32 @@ rule "Friend group or Dysfuntional family?#Friends"
 	then
 		showingRecommendation(frame,"It's always sunny in Philadelphia");
 end
+
+rule "Do you like your charachters to have questionable morals?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Do you like your charachters to have questionable morals?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Yes");
+		answers.add("No");
+		Question q = new Question("Do you like strong female characters?",answers,null);
+		insert(q);
+end
+
+rule "Do you like strong female characters?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Do you like your charachters to have questionable morals?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Yes");
+		answers.add("No");
+		Question q = new Question("Workplace humor?",answers,null);
+		insert(q);
+end
+
+rule "Workplace humor?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Workplace humor?")
+	then
+		showingRecommendation(frame,"The Office");
+end
