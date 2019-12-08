@@ -402,3 +402,21 @@ rule "Forensics or Psychology?#Psychology"
 	then
 		showingRecommendation(frame,"Criminal minds");
 end
+
+rule "Do you like your charachters to have questionable morals?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Do you like your charachters to have questionable morals?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Friends");
+		answers.add("Family");
+		Question q = new Question("Friend group or Dysfuntional family?",answers,null);
+		insert(q);
+end
+
+rule "Friend group or Dysfuntional family?#Family"
+	when 
+		Question(getAnswer() == "Family", getQuestion() == "Friend group or Dysfuntional family?")
+	then
+		showingRecommendation(frame,"Arrested Development");
+end
