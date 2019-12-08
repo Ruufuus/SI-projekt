@@ -39,6 +39,10 @@ function void askQuestion(JFrame frame,Question q){
    		q.setAnswer(answers[answerIndex]);
 }
 
+function void showingRecommendation(JFrame frame,String recommendation){
+	JOptionPane.showMessageDialog(frame, "Twoja rekomendacja to: "+recommendation);
+}
+
 rule "Init"
 	when
 	then
@@ -98,4 +102,303 @@ rule "Drama or Comedy#A little of both "
 		answers.add("Prison");
 		Question q = new Question("Small town or prison?",answers,null);
 		insert(q);
+end
+
+rule "Small town or prison?#Small town"
+	when 
+		Question(getAnswer() == "Small town", getQuestion() == "Small town or prison?")
+	then
+		showingRecommendation(frame,"Gilmore girls");
+end
+
+rule "Small town or prison?#Prison"
+	when 
+		Question(getAnswer() == "Prison", getQuestion() == "Small town or prison?")
+	then
+		showingRecommendation(frame,"OITNB");
+end
+
+
+rule "Do you like sci-fi or supernatural shows?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Do you like sci-fi or supernatural shows?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Yes");
+		answers.add("No");
+		Question q = new Question("Can you handle gore?",answers,null);
+		insert(q);
+end
+
+rule "Do you like sci-fi or supernatural shows?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Do you like sci-fi or supernatural shows?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Yes");
+		answers.add("No");
+		Question q = new Question("Politics?",answers,null);
+		insert(q);
+end
+
+rule "Can you handle gore?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Can you handle gore?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Yes");
+		answers.add("No");
+		Question q = new Question("Do you like zombies?",answers,null);
+		insert(q);
+end
+
+rule "Do you like zombies?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Do you like zombies?")
+	then
+		showingRecommendation(frame,"The Walking Dead");
+end
+
+rule "Do you like zombies?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Do you like zombies?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Yes");
+		answers.add("No");
+		Question q = new Question("Vampires?",answers,null);
+		insert(q);
+end
+
+rule "Vampires?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Vampires?")
+	then
+		showingRecommendation(frame,"Supernatural");
+end
+
+rule "Vampires?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Vampires?")
+	then
+		showingRecommendation(frame,"The vampire diaries");
+end
+
+rule "Can you handle gore?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Can you handle gore?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Yes");
+		answers.add("No");
+		Question q = new Question("British characters?",answers,null);
+		insert(q);
+end
+
+rule "British characters?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "British characters?")
+	then
+		showingRecommendation(frame,"Lost");
+end
+
+rule "British characters?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "British characters?")
+	then
+		showingRecommendation(frame,"Dr. Who");
+end
+
+rule "Politics?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Politics?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Yes");
+		answers.add("No");
+		Question q = new Question("Need action?",answers,null);
+		insert(q);
+end
+
+rule "Need action?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Need action?")
+	then
+		showingRecommendation(frame,"24");
+end
+
+rule "Need action?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Need action?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Yes");
+		answers.add("No");
+		Question q = new Question("Scandalous romance?",answers,null);
+		insert(q);
+end
+
+rule "Scandalous romance?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Scandalous romance?")
+	then
+		showingRecommendation(frame,"Scandal");
+end
+
+rule "Scandalous romance?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Scandalous romance?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Optimistic");
+		answers.add("Cynical");
+		Question q = new Question("Optimistic or Cynical?",answers,null);
+		insert(q);
+end
+
+rule "Optimistic or Cynical?#Optimistic"
+	when 
+		Question(getAnswer() == "Optimistic", getQuestion() == "Optimistic or Cynical?")
+	then
+		showingRecommendation(frame,"The west wing");
+end
+
+rule "Optimistic or Cynical?#Cynical"
+	when 
+		Question(getAnswer() == "Cynical", getQuestion() == "Optimistic or Cynical?")
+	then
+		showingRecommendation(frame,"House of cards");
+end
+
+rule "Politics?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Politics?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Yes");
+		answers.add("No");
+		Question q = new Question("Feel like crying?",answers,null);
+		insert(q);
+end
+
+rule "Feel like crying?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Feel like crying?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Yes");
+		answers.add("No");
+		Question q = new Question("Do you like crime shows?",answers,null);
+		insert(q);
+end
+
+rule "Feel like crying?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Feel like crying?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Yes");
+		answers.add("No");
+		Question q = new Question("Do you like football?",answers,null);
+		insert(q);
+end
+
+rule "Do you like football?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Do you like football?")
+	then
+		showingRecommendation(frame,"Friday Night/Lights");
+end
+
+rule "Do you like football?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Do you like football?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Yes");
+		answers.add("No");
+		Question q = new Question("Hospitals?",answers,null);
+		insert(q);
+end
+
+rule "Hospitals?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Hospitals?")
+	then
+		showingRecommendation(frame,"Parenthood");
+end
+
+rule "Hospitals?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Hospitals?")
+	then
+		showingRecommendation(frame,"Grey's anatomy");
+end
+
+rule "Do you like crime shows?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Do you like crime shows?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Yes");
+		answers.add("No");
+		Question q = new Question("Meth?",answers,null);
+		insert(q);
+end
+
+rule "Meth?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Meth?")
+	then
+		showingRecommendation(frame,"Mad men");
+end
+
+rule "Meth?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Meth?")
+	then
+		showingRecommendation(frame,"Breaking bad");
+end
+
+rule "Do you like crime shows?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Do you like crime shows?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Yes");
+		answers.add("No");
+		Question q = new Question("Do you root for the criminals?",answers,null);
+		insert(q);
+end
+
+rule "Do you root for the criminals?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Do you root for the criminals?")
+	then
+		showingRecommendation(frame,"Dexter");
+end
+
+rule "Do you root for the criminals?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Do you root for the criminals?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Forensics");
+		answers.add("Psychology");
+		Question q = new Question("Forensics or Psychology?",answers,null);
+		insert(q);
+end
+
+rule "Forensics or Psychology?#Forensics"
+	when 
+		Question(getAnswer() == "Forensics", getQuestion() == "Forensics or Psychology?")
+	then
+		showingRecommendation(frame,"CSI: MIAMI");
+end
+
+rule "Forensics or Psychology?#Psychology"
+	when 
+		Question(getAnswer() == "Psychology", getQuestion() == "Forensics or Psychology?")
+	then
+		showingRecommendation(frame,"Criminal minds");
 end
