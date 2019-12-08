@@ -475,3 +475,21 @@ rule "Want to see James Franco & Seth Rogen as high schoolers?#Yes"
 		showingRecommendation(frame,"Freaks & Geeks");
 end
 
+rule "Want to see James Franco & Seth Rogen as high schoolers?#No"
+	when 
+		Question(getAnswer() == "No", getQuestion() == "Want to see James Franco & Seth Rogen as high schoolers?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Bar");
+		answers.add("Cafe");
+		Question q = new Question("Do you want your NYC friends to hang out at a Bar or Cafe?",answers,null);
+		insert(q);
+end
+
+rule "Do you want your NYC friends to hang out at a Bar or Cafe?#Bar"
+	when 
+		Question(getAnswer() == "Bar", getQuestion() == "Do you want your NYC friends to hang out at a Bar or Cafe?")
+	then
+		showingRecommendation(frame,"How I met your mother");
+end
+
