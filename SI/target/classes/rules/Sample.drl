@@ -493,3 +493,10 @@ rule "Do you want your NYC friends to hang out at a Bar or Cafe?#Bar"
 		showingRecommendation(frame,"How I met your mother");
 end
 
+rule "Do you want your NYC friends to hang out at a Bar or Cafe?#Cafe"
+	when 
+		Question(getAnswer() == "Cafe", getQuestion() == "Do you want your NYC friends to hang out at a Bar or Cafe?")
+	then
+		showingRecommendation(frame,"FRIENDS");
+end
+
