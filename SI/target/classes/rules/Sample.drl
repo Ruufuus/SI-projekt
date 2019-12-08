@@ -420,3 +420,10 @@ rule "Friend group or Dysfuntional family?#Family"
 	then
 		showingRecommendation(frame,"Arrested Development");
 end
+
+rule "Friend group or Dysfuntional family?#Friends"
+	when 
+		Question(getAnswer() == "Friends", getQuestion() == "Friend group or Dysfuntional family?")
+	then
+		showingRecommendation(frame,"It's always sunny in Philadelphia");
+end
