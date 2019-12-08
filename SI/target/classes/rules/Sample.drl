@@ -441,7 +441,7 @@ end
 
 rule "Do you like strong female characters?#No"
 	when 
-		Question(getAnswer() == "No", getQuestion() == "Do you like your charachters to have questionable morals?")
+		Question(getAnswer() == "No", getQuestion() == "Do you like strong female characters?")
 	then
 		ArrayList<String> answers = new ArrayList<>();
 		answers.add("Yes");
@@ -500,3 +500,20 @@ rule "Do you want your NYC friends to hang out at a Bar or Cafe?#Cafe"
 		showingRecommendation(frame,"FRIENDS");
 end
 
+rule "Do you like strong female characters?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Do you like strong female characters?")
+	then
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Yes");
+		answers.add("No");
+		Question q = new Question("Do you like them to sell drugs?",answers,null);
+		insert(q);
+end
+
+rule "Do you like them to sell drugs?#Yes"
+	when 
+		Question(getAnswer() == "Yes", getQuestion() == "Do you like them to sell drugs?")
+	then
+		showingRecommendation(frame,"WEEDS");
+end
