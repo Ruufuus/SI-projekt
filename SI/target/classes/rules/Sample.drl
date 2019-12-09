@@ -1,42 +1,37 @@
 package com.sample
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import java.util.ArrayList
 import javax.swing.JOptionPane;
+
 declare Question
 	question : String
 	answers : ArrayList
 	answer : String
 end
 
-global JFrame frame 
-function void askQuestion(JFrame frame,Question q){
-	String[] answers = (String[])q.getAnswers().toArray(new String[q.getAnswers().size()]);
-	int answerIndex = JOptionPane.showOptionDialog(frame,
-                                             q.getQuestion(),
-                                             "Question",
-                                             JOptionPane.DEFAULT_OPTION,
-                                             JOptionPane.INFORMATION_MESSAGE,
-                                             null,
-                                             answers,
-                                             answers[0]);
-    if(answerIndex<q.getAnswers().size())
-   		q.setAnswer(answers[answerIndex]);
+declare Recommendation
+	recommendation : String
+end
+
+function void askQuestion(Question q){
+	String newAnswer = GUI.askQuestionGUI(q.getAnswers(),q.getQuestion());
+	q.setAnswer(newAnswer);
 }
 
-function void showingRecommendation(JFrame frame,String recommendation){
-	JOptionPane.showMessageDialog(frame, "Twoja rekomendacja to: "+recommendation);
+function Recommendation showingRecommendation(String recommendation){
+	GUI.showingRecommendationGUI(recommendation);
+	return new Recommendation(recommendation);
+	
 }
 rule "Init"
-	when
+	when 
 	then
-		DroolsTest.preparingBeginingOfFile();
+		JSonHandler.preparingBeginingOfFile();
 		ArrayList<String> answers = new ArrayList<>();
 		answers.add("Drama");
 		answers.add("Comedy");
 		answers.add("A little of both");
 		Question q = new Question("Drama or Comedy",answers,null);
-		frame = new JFrame();
 		insert(q);
 end
  
@@ -44,17 +39,9 @@ rule "Asking question"
 	when
 		q : Question(getAnswer() == null)
     then
-    	askQuestion(frame,q);    	
+    	askQuestion(q);    	
 		update(q);
 end
-
-rule "Saving answers"
-	when
-		q : Question(getAnswer() != null)
-	then
-		DroolsTest.saving(q.getQuestion(),q.getAnswer());
-end
-
 
 rule "Drama or Comedy#Drama"
 	when 
@@ -74,7 +61,7 @@ rule "Drama or Comedy#Comedy"
 		ArrayList<String> answers = new ArrayList<>();
 		answers.add("Yes");
 		answers.add("No");
-		Question q = new Question("Do you like your charachters to have questionable morals?",answers,null);
+		Question q = new Question("Do you like your characters to have questionable morals?",answers,null);
 		insert(q);
 end
 
@@ -93,14 +80,16 @@ rule "Small town or prison?#Small town"
 	when 
 		Question(getAnswer() == "Small town", getQuestion() == "Small town or prison?")
 	then
-		showingRecommendation(frame,"Gilmore girls");
+		Recommendation rec = showingRecommendation("Gilmore girls");
+		insert(rec);
 end
 
 rule "Small town or prison?#Prison"
 	when 
 		Question(getAnswer() == "Prison", getQuestion() == "Small town or prison?")
 	then
-		showingRecommendation(frame,"OITNB");
+		Recommendation rec = showingRecommendation("OITNB");
+		insert(rec);
 end
 
 
@@ -141,7 +130,8 @@ rule "Do you like zombies?#Yes"
 	when 
 		Question(getAnswer() == "Yes", getQuestion() == "Do you like zombies?")
 	then
-		showingRecommendation(frame,"The Walking Dead");
+		Recommendation rec = showingRecommendation("The Walking Dead");
+		insert(rec);
 end
 
 rule "Do you like zombies?#No"
@@ -159,14 +149,16 @@ rule "Vampires?#No"
 	when 
 		Question(getAnswer() == "No", getQuestion() == "Vampires?")
 	then
-		showingRecommendation(frame,"Supernatural");
+		Recommendation rec = showingRecommendation("Supernatural");
+		insert(rec);
 end
 
 rule "Vampires?#Yes"
 	when 
 		Question(getAnswer() == "Yes", getQuestion() == "Vampires?")
 	then
-		showingRecommendation(frame,"The vampire diaries");
+		Recommendation rec = showingRecommendation("The vampire diaries");
+		insert(rec);
 end
 
 rule "Can you handle gore?#No"
@@ -184,14 +176,16 @@ rule "British characters?#No"
 	when 
 		Question(getAnswer() == "No", getQuestion() == "British characters?")
 	then
-		showingRecommendation(frame,"Lost");
+		Recommendation rec = showingRecommendation("Lost");
+		insert(rec);
 end
 
 rule "British characters?#Yes"
 	when 
 		Question(getAnswer() == "Yes", getQuestion() == "British characters?")
 	then
-		showingRecommendation(frame,"Dr. Who");
+		Recommendation rec = showingRecommendation("Dr. Who");
+		insert(rec);
 end
 
 rule "Politics?#Yes"
@@ -209,7 +203,8 @@ rule "Need action?#Yes"
 	when 
 		Question(getAnswer() == "Yes", getQuestion() == "Need action?")
 	then
-		showingRecommendation(frame,"24");
+		Recommendation rec =showingRecommendation("24");
+		insert(rec);
 end
 
 rule "Need action?#No"
@@ -227,7 +222,8 @@ rule "Scandalous romance?#Yes"
 	when 
 		Question(getAnswer() == "Yes", getQuestion() == "Scandalous romance?")
 	then
-		showingRecommendation(frame,"Scandal");
+		Recommendation rec =showingRecommendation("Scandal");
+		insert(rec);
 end
 
 rule "Scandalous romance?#No"
@@ -245,14 +241,16 @@ rule "Optimistic or Cynical?#Optimistic"
 	when 
 		Question(getAnswer() == "Optimistic", getQuestion() == "Optimistic or Cynical?")
 	then
-		showingRecommendation(frame,"The west wing");
+		Recommendation rec =showingRecommendation("The west wing");
+		insert(rec);
 end
 
 rule "Optimistic or Cynical?#Cynical"
 	when 
 		Question(getAnswer() == "Cynical", getQuestion() == "Optimistic or Cynical?")
 	then
-		showingRecommendation(frame,"House of cards");
+		Recommendation rec =showingRecommendation("House of cards");
+		insert(rec);
 end
 
 rule "Politics?#No"
@@ -292,7 +290,8 @@ rule "Do you like football?#Yes"
 	when 
 		Question(getAnswer() == "Yes", getQuestion() == "Do you like football?")
 	then
-		showingRecommendation(frame,"Friday Night/Lights");
+		Recommendation rec =showingRecommendation("Friday Night/Lights");
+		insert(rec);
 end
 
 rule "Do you like football?#No"
@@ -310,14 +309,16 @@ rule "Hospitals?#No"
 	when 
 		Question(getAnswer() == "No", getQuestion() == "Hospitals?")
 	then
-		showingRecommendation(frame,"Parenthood");
+		Recommendation rec =showingRecommendation("Parenthood");
+		insert(rec);
 end
 
 rule "Hospitals?#Yes"
 	when 
 		Question(getAnswer() == "Yes", getQuestion() == "Hospitals?")
 	then
-		showingRecommendation(frame,"Grey's anatomy");
+		Recommendation rec =showingRecommendation("Grey's anatomy");
+		insert(rec);
 end
 
 rule "Do you like crime shows?#No"
@@ -335,14 +336,16 @@ rule "Meth?#No"
 	when 
 		Question(getAnswer() == "No", getQuestion() == "Meth?")
 	then
-		showingRecommendation(frame,"Mad men");
+		Recommendation rec =showingRecommendation("Mad men");
+		insert(rec);
 end
 
 rule "Meth?#Yes"
 	when 
 		Question(getAnswer() == "Yes", getQuestion() == "Meth?")
 	then
-		showingRecommendation(frame,"Breaking bad");
+		Recommendation rec =showingRecommendation("Breaking bad");
+		insert(rec);
 end
 
 rule "Do you like crime shows?#Yes"
@@ -360,7 +363,8 @@ rule "Do you root for the criminals?#Yes"
 	when 
 		Question(getAnswer() == "Yes", getQuestion() == "Do you root for the criminals?")
 	then
-		showingRecommendation(frame,"Dexter");
+		Recommendation rec =showingRecommendation("Dexter");
+		insert(rec);
 end
 
 rule "Do you root for the criminals?#No"
@@ -378,19 +382,21 @@ rule "Forensics or Psychology?#Forensics"
 	when 
 		Question(getAnswer() == "Forensics", getQuestion() == "Forensics or Psychology?")
 	then
-		showingRecommendation(frame,"CSI: MIAMI");
+		Recommendation rec =showingRecommendation("CSI: MIAMI");
+		insert(rec);
 end
 
 rule "Forensics or Psychology?#Psychology"
 	when 
 		Question(getAnswer() == "Psychology", getQuestion() == "Forensics or Psychology?")
 	then
-		showingRecommendation(frame,"Criminal minds");
+		Recommendation rec =showingRecommendation("Criminal minds");
+		insert(rec);
 end
 
-rule "Do you like your charachters to have questionable morals?#Yes"
+rule "Do you like your characters to have questionable morals?#Yes"
 	when 
-		Question(getAnswer() == "Yes", getQuestion() == "Do you like your charachters to have questionable morals?")
+		Question(getAnswer() == "Yes", getQuestion() == "Do you like your characters to have questionable morals?")
 	then
 		ArrayList<String> answers = new ArrayList<>();
 		answers.add("Friends");
@@ -403,19 +409,21 @@ rule "Friend group or Dysfuntional family?#Family"
 	when 
 		Question(getAnswer() == "Family", getQuestion() == "Friend group or Dysfuntional family?")
 	then
-		showingRecommendation(frame,"Arrested Development");
+		Recommendation rec =showingRecommendation("Arrested Development");
+		insert(rec);
 end
 
 rule "Friend group or Dysfuntional family?#Friends"
 	when 
 		Question(getAnswer() == "Friends", getQuestion() == "Friend group or Dysfuntional family?")
 	then
-		showingRecommendation(frame,"It's always sunny in Philadelphia");
+		Recommendation rec =showingRecommendation("It's always sunny in Philadelphia");
+		insert(rec);
 end
 
-rule "Do you like your charachters to have questionable morals?#No"
+rule "Do you like your characters to have questionable morals?#No"
 	when 
-		Question(getAnswer() == "No", getQuestion() == "Do you like your charachters to have questionable morals?")
+		Question(getAnswer() == "No", getQuestion() == "Do you like your characters to have questionable morals?")
 	then
 		ArrayList<String> answers = new ArrayList<>();
 		answers.add("Yes");
@@ -439,7 +447,8 @@ rule "Workplace humor?#Yes"
 	when 
 		Question(getAnswer() == "Yes", getQuestion() == "Workplace humor?")
 	then
-		showingRecommendation(frame,"The Office");
+		Recommendation rec =showingRecommendation("The Office");
+		insert(rec);
 end
 
 rule "Workplace humor?#No"
@@ -457,7 +466,8 @@ rule "Want to see James Franco & Seth Rogen as high schoolers?#Yes"
 	when 
 		Question(getAnswer() == "Yes", getQuestion() == "Want to see James Franco & Seth Rogen as high schoolers?")
 	then
-		showingRecommendation(frame,"Freaks & Geeks");
+		Recommendation rec =showingRecommendation("Freaks & Geeks");
+		insert(rec);
 end
 
 rule "Want to see James Franco & Seth Rogen as high schoolers?#No"
@@ -475,14 +485,16 @@ rule "Do you want your NYC friends to hang out at a Bar or Cafe?#Bar"
 	when 
 		Question(getAnswer() == "Bar", getQuestion() == "Do you want your NYC friends to hang out at a Bar or Cafe?")
 	then
-		showingRecommendation(frame,"How I met your mother");
+		Recommendation rec =showingRecommendation("How I met your mother");
+		insert(rec);
 end
 
 rule "Do you want your NYC friends to hang out at a Bar or Cafe?#Cafe"
 	when 
 		Question(getAnswer() == "Cafe", getQuestion() == "Do you want your NYC friends to hang out at a Bar or Cafe?")
 	then
-		showingRecommendation(frame,"FRIENDS");
+		Recommendation rec =showingRecommendation("FRIENDS");
+		insert(rec);
 end
 
 rule "Do you like strong female characters?#Yes"
@@ -500,7 +512,8 @@ rule "Do you like them to sell drugs?#Yes"
 	when 
 		Question(getAnswer() == "Yes", getQuestion() == "Do you like them to sell drugs?")
 	then
-		showingRecommendation(frame,"WEEDS");
+		Recommendation rec =showingRecommendation("WEEDS");
+		insert(rec);
 end
 
 rule "Do you like them to sell drugs?#No"
@@ -518,19 +531,35 @@ rule "Tina Fey or Amy Poehler?#Tina"
 	when 
 		Question(getAnswer() == "Tina", getQuestion() == "Tina Fey or Amy Poehler?")
 	then
-		showingRecommendation(frame,"30 Rock");
+		Recommendation rec =showingRecommendation("30 Rock");
+		insert(rec);
 end
 
 rule "Tina Fey or Amy Poehler?#Amy"
 	when 
 		Question(getAnswer() == "Amy", getQuestion() == "Tina Fey or Amy Poehler?")
 	then
-		showingRecommendation(frame,"Parks & Recreation");
+		Recommendation rec =showingRecommendation("Parks & Recreation");
+		insert(rec);
 end
 
-rule "Closing Json File"
+rule "Saving answers"
 	when
-		not(exists(q : Question(getAnswer() == null)))
+		not(exists(Question(getAnswer() == null)))
+		exists(Recommendation())
+		q : Question()
 	then
-		DroolsTest.preparingEndOfFile();
+		JSonHandler.savingQuestion(q.getQuestion(),q.getAnswer());
 end
+
+rule "Saving recommendation and closing file"
+	when
+		r : Recommendation()
+	then
+		JSonHandler.savingRecommendation(r.getRecommendation());
+		JSonHandler.preparingEndOfFile();
+end
+
+	
+	
+	
