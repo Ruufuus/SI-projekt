@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import java.util.ArrayList
 import javax.swing.JOptionPane;
-
 declare Question
 	question : String
 	answers : ArrayList
@@ -28,10 +27,10 @@ function void askQuestion(JFrame frame,Question q){
 function void showingRecommendation(JFrame frame,String recommendation){
 	JOptionPane.showMessageDialog(frame, "Twoja rekomendacja to: "+recommendation);
 }
-
 rule "Init"
 	when
 	then
+		DroolsTest.preparingBeginingOfFile();
 		ArrayList<String> answers = new ArrayList<>();
 		answers.add("Drama");
 		answers.add("Comedy");
@@ -48,6 +47,14 @@ rule "Asking question"
     	askQuestion(frame,q);    	
 		update(q);
 end
+
+rule "Saving answers"
+	when
+		q : Question(getAnswer() != null)
+	then
+		DroolsTest.saving(q.getQuestion(),q.getAnswer());
+end
+
 
 rule "Drama or Comedy#Drama"
 	when 
@@ -519,4 +526,11 @@ rule "Tina Fey or Amy Poehler?#Amy"
 		Question(getAnswer() == "Amy", getQuestion() == "Tina Fey or Amy Poehler?")
 	then
 		showingRecommendation(frame,"Parks & Recreation");
+end
+
+rule "Closing Json File"
+	when
+		not(exists(q : Question(getAnswer() == null)))
+	then
+		DroolsTest.preparingEndOfFile();
 end
