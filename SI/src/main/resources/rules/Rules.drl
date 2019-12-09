@@ -3,46 +3,6 @@ import java.util.ArrayList;
 import java.util.ArrayList
 import javax.swing.JOptionPane;
 
-declare Question
-	question : String
-	answers : ArrayList
-	answer : String
-end
-
-declare Recommendation
-	recommendation : String
-end
-
-function void askQuestion(Question q){
-	String newAnswer = GUI.askQuestionGUI(q.getAnswers(),q.getQuestion());
-	q.setAnswer(newAnswer);
-}
-
-function Recommendation showingRecommendation(String recommendation){
-	GUI.showingRecommendationGUI(recommendation);
-	return new Recommendation(recommendation);
-	
-}
-rule "Init"
-	when 
-	then
-		JSonHandler.preparingBeginingOfFile();
-		ArrayList<String> answers = new ArrayList<>();
-		answers.add("Drama");
-		answers.add("Comedy");
-		answers.add("A little of both");
-		Question q = new Question("Drama or Comedy",answers,null);
-		insert(q);
-end
- 
-rule "Asking question"
-	when
-		q : Question(getAnswer() == null)
-    then
-    	askQuestion(q);    	
-		update(q);
-end
-
 rule "Drama or Comedy#Drama"
 	when 
 		Question(getAnswer() == "Drama", getQuestion() == "Drama or Comedy")

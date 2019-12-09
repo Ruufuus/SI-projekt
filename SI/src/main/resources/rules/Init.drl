@@ -1,0 +1,24 @@
+package com.sample
+import java.util.ArrayList;
+import java.util.ArrayList
+import javax.swing.JOptionPane;
+
+rule "Init"
+	when 
+	then
+		JSonHandler.preparingBeginingOfFile();
+		ArrayList<String> answers = new ArrayList<>();
+		answers.add("Drama");
+		answers.add("Comedy");
+		answers.add("A little of both");
+		Question q = new Question("Drama or Comedy",answers,null);
+		insert(q);
+end
+ 
+rule "Asking question"
+	when
+		q : Question(getAnswer() == null)
+    then
+    	askQuestion(q);    	
+		update(q);
+end

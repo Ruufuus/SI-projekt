@@ -1,8 +1,9 @@
 {
 	Questions with answers:[
-		{question:"Drama or Comedy",answer:"Comedy"},
-		{question:"Do you like your characters to have questionable morals?",answer:"Yes"},
-		{question:"Friend group or Dysfuntional family?",answer:"Family"},
+		{question:"Drama or Comedy",answer:"Drama"},
+		{question:"Do you like sci-fi or supernatural shows?",answer:"Yes"},
+		{question:"Can you handle gore?",answer:"Yes"},
+		{question:"Do you like zombies?",answer:"Yes"},
 	]
-	recommendation:"Arrested Development"
+	recommendation:"The Walking Dead"
 }
